@@ -1,64 +1,231 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+Berikut adalah contoh struktur database MySQL untuk tabel mahasiswa, matakuliah, dan nilai:
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+\# Struktur Tabel
 
-## About Laravel
+\*Tabel Mahasiswa\*
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+\```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+CREATE TABLE mahasiswa (
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+`  `npm VARCHAR(10) PRIMARY KEY,
 
-## Learning Laravel
+`  `nama VARCHAR(50) NOT NULL,
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+`  `jurusan VARCHAR(30) NOT NULL,
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+`  `tanggal\_lahir DATE NOT NULL,
 
-## Laravel Sponsors
+`  `alamat TEXT
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+);
 
-### Premium Partners
+\```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+\*Tabel Matakuliah\*
 
-## Contributing
+\```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+CREATE TABLE matakuliah (
 
-## Code of Conduct
+`  `kode\_matakuliah VARCHAR(6) PRIMARY KEY,
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+`  `nama\_matakuliah VARCHAR(50) NOT NULL,
 
-## Security Vulnerabilities
+`  `sks TINYINT NOT NULL
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+);
 
-## License
+\```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+\*Tabel Nilai\*
+
+\```
+
+CREATE TABLE nilai (
+
+`  `id\_nilai INT AUTO\_INCREMENT PRIMARY KEY,
+
+`  `npm VARCHAR(10) NOT NULL,
+
+`  `kode\_matakuliah VARCHAR(6) NOT NULL,
+
+`  `nilai DECIMAL(3,2) NOT NULL,
+
+`  `semester TINYINT NOT NULL,
+
+`  `tahun\_akademik VARCHAR(9) NOT NULL,
+
+`  `FOREIGN KEY (npm) REFERENCES mahasiswa(npm),
+
+`  `FOREIGN KEY (kode\_matakuliah) REFERENCES matakuliah(kode\_matakuliah)
+
+);
+
+\```
+
+\# Penjelasan
+
+1\. Tabel `mahasiswa` memiliki atribut:
+
+\- `npm`: Nomor Pokok Mahasiswa (primary key)
+
+\- `nama`: Nama mahasiswa
+
+\- `jurusan`: Jurusan mahasiswa
+
+\- `tanggal\_lahir`: Tanggal lahir mahasiswa
+
+\- `alamat`: Alamat mahasiswa
+
+2\. Tabel `matakuliah` memiliki atribut:
+
+\- `kode\_matakuliah`: Kode matakuliah (primary key)
+
+\- `nama\_matakuliah`: Nama matakuliah
+
+\- `sks`: Jumlah Satuan Kredit Semester (SKS)
+
+3\. Tabel `nilai` memiliki atribut:
+
+\- `id\_nilai`: ID nilai (primary key, auto increment)
+
+\- `npm`: Nomor Pokok Mahasiswa (foreign key ke tabel `mahasiswa`)
+
+\- `kode\_matakuliah`: Kode matakuliah (foreign key ke tabel `matakuliah`)
+
+\- `nilai`: Nilai mahasiswa
+
+\- `semester`: Semester
+
+\- `tahun\_akademik`: Tahun akademik
+
+\# Contoh Data
+
+\*Tabel Mahasiswa\*
+
+| npm | nama | jurusan | tanggal\_lahir | alamat |
+
+\| --- | --- | --- | --- | --- |
+
+| 1234567890 | John Doe | Teknik Informatika | 1995-01-01 | Jl. ABC No. 123 |
+
+\*Tabel Matakuliah\*
+
+| kode\_matakuliah | nama\_matakuliah | sks |
+
+\| --- | --- | --- |
+
+| IF101 | Algoritma | 3 |
+
+| IF102 | Struktur Data | 3 |
+
+\*Tabel Nilai\*
+
+| id\_nilai | npm | kode\_matakuliah | nilai | semester | tahun\_akademik |
+
+\| --- | --- | --- | --- | --- | --- |
+
+| 1 | 1234567890 | IF101 | 85.00 | 1 | 2022/2023 |
+
+| 2 | 1234567890 | IF102 | 90.00 | 2 | 2022/2023 |
+
+**Pertanyaan:**
+
+1. Buatlah Web Service API POST DATA Insert Tbl Nilai Menggunakan PHP Laravel Dengan Request Body Seperti Dibawah Ini
+
+   `	`{
+
+   `	`nilai:[
+
+   `			`{
+
+   `			`npm:?,
+
+   `			`kodeMataKuliah:?,
+
+   `			`nilai:?,
+
+   `			`tahunAjaran:?,
+
+   `			`},
+
+   `			`{
+
+   `			`npm:?,
+
+   `			`kodeMataKuliah:?,
+
+   `			`nilai:?,
+
+   `			`tahunAjaran:?,
+
+   `			`}
+
+   `		`]
+
+   `	`}
+
+2. Buatlah Web Service API GET DATA Menggunakan PHP Laravel Dengan Respon Body Seperti Dibawah Ini
+
+   `	`{
+
+   `	`nilai:[
+
+   `			`{
+
+   `			`npm:?,
+
+   `			`namaMahasiswa
+
+   `			`kodeMataKuliah:?,
+
+   `			`nilai:?,
+
+   `			`tahunAjaran:?
+
+   `			`}
+
+   `	`]
+
+   `	`matakuliah:[
+
+   `		`{
+
+   `			`kodeMatakuliah:?,
+
+   `			`namaMatakuliah:?,
+
+   `			`sks:?,
+
+   `		`},
+
+   `		`{
+
+   `			`kodeMatakuliah:?,
+
+   `			`namaMatakuliah:?,
+
+   `			`sks:?,
+
+   `		`}
+
+   `	`]
+
+   `	`mahasiswa:{
+
+   `		`nama:?,
+
+   `		`npm:?,
+
+   `		`jurusan:?,
+
+   `		`tanggalLahir:?,
+
+   `	`}
+
+   `	`}
+
+3. Buatlah array  find/filter dengan key nama mahasiswa dari data array respon json no 2 menggunakan javascript
+3. Buatlah array data sort dari key nama mahasiswa dari array respon json no 2 menggunakan javascript
+
